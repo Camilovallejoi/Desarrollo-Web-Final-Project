@@ -1,0 +1,63 @@
+<h2>Editar comic</h2>
+
+<form [formGroup]="formcomic" (ngSubmit)="actualizarcomic()" id="form-comic">
+    <div class="cont-input">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre comic</mat-label>
+            <input matInput formControlName="nombre">
+        </mat-form-field>
+        @if(controls['nombre'].invalid &&
+        controls['nombre'].errors &&
+        (controls['nombre'].dirty || controls['nombre'].touched)){
+        <div class="text-danger alert-custom">
+            El nombre es requerido
+        </div>
+        }
+    </div>
+
+    <div class="cont-input">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Descripcion</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+
+        </mat-form-field>
+        @if(formcomic.get('descripcion')?.invalid &&
+        formcomic.get('descripcion')?.errors &&
+        (formcomic.get('descripcion')?.dirty || formcomic.get('descripcion')?.touched)){
+        <div class="text-danger alert-custom">
+            La descripción es requerida
+        </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-6 cont-input">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio">
+            </mat-form-field>
+            @if(formcomic.get('precio')?.invalid &&
+            formcomic.get('precio')?.errors &&
+            (formcomic.get('precio')?.dirty || formcomic.get('precio')?.touched)){
+            <div class="text-danger alert-custom">
+                @if(formcomic.get('precio')?.errors?.['required']) {
+                El precio es requerido
+
+                }
+                @if(formcomic.get('precio')?.errors?.['min']) {
+                El precio debe ser mayor a 0
+
+                }
+            </div>
+            }
+        </div>
+        <div class="col-md-6 cont-input">
+            <input type="file" name="img-comic" id="img-comic" (change)="onFileSelected($event)">
+            <img [src]="formcomic.get('imagen')?.value" alt="">
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button mat-raised-button color="primary">Actualizar</button>
+    </div>
+
+</form>

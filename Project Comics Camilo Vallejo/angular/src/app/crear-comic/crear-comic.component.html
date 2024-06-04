@@ -1,0 +1,60 @@
+<h2>Crear comic</h2>
+
+<form [formGroup]="formcomic" (ngSubmit)="guardarcomic()" id="form-comic">
+    <div class="cont-input">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre comic</mat-label>
+            <input matInput formControlName="nombre">
+        </mat-form-field>
+        @if(f['nombre'].invalid && f['nombre'].errors && (f['nombre'].dirty || f['nombre'].touched)){
+
+        <div class="text-danger alert-custom">
+            El nombre es requerido
+        </div>
+        }
+    </div>
+
+    <div class="cont-input">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Descripcion</mat-label>
+            <textarea matInput formControlName="descripcion"></textarea>
+
+        </mat-form-field>
+        @if(formcomic.get('descripcion')?.invalid &&
+        formcomic.get('descripcion')?.errors &&
+        (formcomic.get('descripcion')?.dirty || formcomic.get('descripcion')?.touched)){
+        <div class="text-danger alert-custom">
+            La descripción es requerida
+        </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-6 cont-input">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio">
+            </mat-form-field>
+            @if(f['precio'].invalid && f['precio'].errors && (f['precio'].dirty || f['precio'].touched)){
+            <div class="text-danger alert-custom">
+                @if(f['precio'].errors['required']) {
+                El precio es reque2rido
+
+                }
+                @if(f['precio'].errors['min']) {
+                El precio debe ser mayor a 0
+
+                }
+            </div>
+            }
+        </div>
+        <div class="col-md-6 cont-input">
+            <input type="file" name="img-comic" id="img-comic" (change)="onFileSelected($event)">
+            <img [src]="formcomic.get('imagen')?.value" alt="">
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button mat-raised-button color="primary">Guardar</button>
+    </div>
+
+</form>
